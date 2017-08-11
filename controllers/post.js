@@ -102,14 +102,14 @@ function topic(req, res, next) {
 		userInfo: req.user.info
 	};
 	topic_passed.getTopicById (option, function (err, item) {
-		if (err) return next(err);
+		if (err || item.topic.length < 1) return next(new Error('not find topic'));
 		res.render('./user/topic', {
 			user: req.user,
 			topic: item.topic,
 			topic_count: item.count,
 			user_rank: item.user_rank,
 			topic_rank: item.topic_rank,
-			author: item.topic[0].author,
+			author: item.topic[0].author || [],
 			title:  item.topic[0].title
 		})
 	});
