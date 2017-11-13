@@ -38,7 +38,7 @@ function getReply (condition, authuser, callback) {
 				return callback(null, replyData);
 			}
 			user.getUserById(reply[i].reply_id, function (err, user) {
-				if (err) return callback(null, replyData);
+				if (err || user.length < 1) return callback(null, replyData);
 				var tempData = {
 					_id: reply[i]._id,
 					content: tools.filterTag(reply[i].content),
